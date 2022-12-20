@@ -1,4 +1,7 @@
 import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Auth } from 'src/auth/decorators/auth.decorator';
+import { GetUser } from 'src/auth/decorators/get-user.decorator';
+import { User } from 'src/auth/entities/user.entity';
 import { ComentsService } from './coments.service';
 import { CreateComentDto } from './dto/create-coment.dto';
 import { UpdateComentDto } from './dto/update-coment.dto';
@@ -8,7 +11,9 @@ export class ComentsController {
   constructor(private readonly comentsService: ComentsService) {}
 
   @Post()
-  create(@Body() createComentDto: CreateComentDto) {
+  @Auth()
+  create(@Body() createComentDto: CreateComentDto,
+  ) {
     return this.comentsService.create(createComentDto);
   }
 
